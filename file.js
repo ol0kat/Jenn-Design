@@ -30,22 +30,32 @@
   }
 
   // Function to send the message
-  function sendMessage() {
-    // Get the email and message fields
-    var emailField = document.getElementById("email");
-    var messageField = document.getElementById("message");
+function sendMessage() {
+  // Get the email and message fields
+  var emailField = document.getElementById("email");
+  var messageField = document.getElementById("message");
 
-    // Send the message using your preferred method (e.g., AJAX request)
-    // Replace this with your actual implementation
+  // Create an object with the form data
+  var formData = {
+    email: emailField.value,
+    message: messageField.value
+  };
 
-    // Display a success message
-    var successMessage = document.querySelector(".contact_success");
-    successMessage.style.display = "block";
-    form.reset(); // Reset the form fields
-  }
-
-  // Function to display an error message
-  function displayErrorMessage() {
-    var errorMessage = document.querySelector(".empty_notice");
-    errorMessage.style.display = "block";
-  }
+  // Send the message using Formspree
+  $.ajax({
+    type: "POST",
+    url: "https://formspree.io/p__tison@outlook.com",
+    data: formData,
+    dataType: "json",
+    success: function(response) {
+      // Display a success message
+      var successMessage = document.querySelector(".contact_success");
+      successMessage.style.display = "block";
+      form.reset(); // Reset the form fields
+    },
+    error: function(error) {
+      // Display an error message
+      console.error("Error sending message:", error);
+    }
+  });
+}
